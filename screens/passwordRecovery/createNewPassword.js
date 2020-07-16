@@ -1,0 +1,84 @@
+import React, { useContext, useState } from 'react';
+import { Text, Input, Icon, Button } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
+import Spacer from '../components/Spacer';
+import { Context } from '../context/AuthContext';
+
+function setNewPassword(props) {
+  const info = useContext(Context);
+  const [password, setPassword] = useState('');
+  const [passwordtwo, setPasswordTwo] = useState('');
+
+  return (
+    <View style={styles.container}>
+      <Spacer>
+        <Text
+          h3
+          style={(styles.center, { color: '#4C7450', fontWeight: '700' })}
+        >
+          Forget Password
+        </Text>
+      </Spacer>
+      <Spacer>
+        <Text style={{ fontWeight: '800' }}>Please enter a new password</Text>
+      </Spacer>
+      <Spacer>
+        <Input
+          label="New Password"
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          secureTextEntry={true}
+          autoCapitalize="none"
+          leftIcon={
+            <Icon
+              name="lock"
+              size={24}
+              type="font-awesome"
+              iconStyle={{ marginRight: 10 }}
+              color="black"
+            />
+          }
+        />
+        <Spacer />
+        <Input
+          label="Re-enter Password"
+          onChangeText={(text) => setPasswordTwo(text)}
+          value={passwordtwo}
+          secureTextEntry={true}
+          autoCapitalize="none"
+          leftIcon={
+            <Icon
+              name="lock"
+              size={24}
+              type="font-awesome"
+              iconStyle={{ marginRight: 10 }}
+              color="black"
+            />
+          }
+        />
+        <Spacer />
+        <Button
+          raised
+          title="Change password"
+          buttonStyle={{
+            borderRadius: '50%',
+            backgroundColor: '#4C7450',
+          }}
+          onPress={() => props.navigation.navigate('logins')}
+        />
+      </Spacer>
+    </View>
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  center: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+export default setNewPassword;
