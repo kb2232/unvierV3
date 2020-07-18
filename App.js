@@ -21,7 +21,7 @@ import { AuthProvider } from './screens/context/AuthContext';
 import { setNavigator } from './screens/history';
 
 const MainNav = createSwitchNavigator({
-  //ResolveAuth: LoadingScreen,
+  ResolveAuth: LoadingScreen,
   welcomes: { screen: Welcome },
   auths: {
     screen: createStackNavigator({

@@ -54,33 +54,63 @@ export const AuthProvider = (props) => {
         type: 'sign_in',
         payload: token,
       });
-      navigate('Profile');
+      navigate('mains');
     } else {
-      navigate('SignIn');
+      navigate('logins');
     }
   };
 
-  // -- Actions
+  /*------------ Actions --------- */
+
+  // -- getprofile
+  const getUserProfile=async()=>{
+    try {
+      const accessToken = await AsyncStorage.getItem('token');
+      const emailToken = await AsyncStorage.getItem(accessToken);
+      const res = await AuthApi.post('/getuserprofile',{emailToken});
+      const { email,mobile,name,username} = res.data.user;
+      setBio({email,mobile,name,username,storageEmail:emailToken})
+    } catch (error) {
+      dispatch({
+        type: 'add_error',
+        payload: 'unable to get user profile',
+      });
+    }
+  }
 
   // -- signin
-  const signin = async (username, password) => {
-    username = username.toLowerCase();
+  const signin = async (email, password) => {
+    email = email.toLowerCase();
     try {
       const response = await AuthApi.post('/signintoapp', {
-        username,
+        email,
         password,
       });
       await AsyncStorage.setItem('token', response.data.token);
+      await AsyncStorage.setItem(response.data.token, email);
       dispatch({
         type: 'sign_in',
         payload: response.data.token,
       });
-      navigate('Profile');
+      setBio({email})
+      navigate('mains');
     } catch (error) {
-      dispatch({
-        type: 'add_error',
-        payload: 'Unable to Sign in',
-      });
+      if(JSON.stringify(error).includes(402)){
+        dispatch({
+          type: 'add_error',
+          payload: 'most provide email and password',
+        });
+      } else if(JSON.stringify(error).includes(403)){
+        dispatch({
+          type: 'add_error',
+          payload: 'email is not registered',
+        });
+      } else{
+        dispatch({
+          type: 'add_error',
+          payload: 'Unable to Sign in',
+        });
+      }
     }
   };
 
@@ -93,9 +123,9 @@ export const AuthProvider = (props) => {
       });
 
       if (result.type === 'success') {
-        console.log('Name | ', result.user.givenName);
         navigate('signups', result.user.email); //after Google login redirect to Profile
-        await AsyncStorage.setItem('token', result.accessToken);
+        const accessToken = await AsyncStorage.setItem('token', result.accessToken);
+        await AsyncStorage.setItem(accessToken, result.user.email);
         dispatch({
           type: 'sign_up',
           payload: result.accessToken,
@@ -115,8 +145,7 @@ export const AuthProvider = (props) => {
 
   /* -- sign up */
   const signup = async (
-    firstname,
-    lastname,
+    name,
     email,
     username,
     password,
@@ -133,7 +162,7 @@ export const AuthProvider = (props) => {
     }
     try {
       const res = await AuthApi.post('/newusersignup', {
-        name: `${firstname} ${lastname}`,
+        name,
         email,
         username,
         password,
@@ -144,12 +173,30 @@ export const AuthProvider = (props) => {
         type: 'sign_up',
         payload: res.data.token,
       });
-      navigate('SignIn');
+      navigate('logins');
     } catch (error) {
-      dispatch({
-        type: 'add_error',
-        payload: 'Please check username and/or password',
-      });
+      if(JSON.stringify(error).includes('401')){
+         dispatch({
+          type: 'add_error',
+          payload: 'email has been registered',
+        });
+      } else if(JSON.stringify(error).includes('402')){
+         dispatch({
+          type: 'add_error',
+          payload: 'username has been registered',
+        });
+      } else if(JSON.stringify(error).includes('403')){
+         dispatch({
+          type: 'add_error',
+          payload: 'mobile number has been registered',
+        });
+      } else{
+        dispatch({
+          type: 'add_error',
+          payload: 'unable to create new user',
+        });
+      }
+       
     }
   };
 
@@ -159,7 +206,7 @@ export const AuthProvider = (props) => {
     dispatch({
       type: 'sign_out',
     });
-    navigate('authenticationFlow');
+    navigate('logins');
   };
 
   /* clear error */
@@ -180,6 +227,7 @@ export const AuthProvider = (props) => {
         signout,
         clearErrorMessage,
         tryLocalSign,
+        getUserProfile
       }}
     >
       {props.children}

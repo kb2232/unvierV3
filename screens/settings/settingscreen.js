@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { Text, Button } from 'react-native-elements';
 import { View, StyleSheet } from 'react-native';
+import { Context } from '../context/AuthContext';
 
-class SettingScreen extends Component {
-  render() {
-    return (
-      <>
-        <View style={styles.container}>
-          <Text>setting Screen</Text>
-          <Button
-            title="Sign out"
-            onPress={() => this.props.navigation.navigate('logins')}
-          />
-        </View>
-      </>
-    );
-  }
+function SettingScreen(){
+  const {signout} = useContext(Context)
+  return (
+    <>
+      <View style={styles.container}>
+        <Text>setting Screen</Text>
+        <Button
+          title="Sign out"
+          onPress={() => signout()}
+        />
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

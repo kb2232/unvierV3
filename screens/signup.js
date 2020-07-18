@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Spacer, { SmallSpacer } from './components/Spacer';
 
 const SignupScreen = (props) => {
-  const { singup } = useContext(Context);
+  const { bio:{email,name},signup,data:{errorMessages} } = useContext(Context);
   const [firstname, setFname] = useState('');
   const [lastname, setLname] = useState('');
   const [emails, setEmail] = useState('');
@@ -19,6 +19,7 @@ const SignupScreen = (props) => {
         <Text h3 style={{ color: '#4C7450', fontWeight: '700' }}>
           Register
         </Text>
+        <Text style={{color:'red'}}>{errorMessages?errorMessages:""}</Text>
       </Spacer>
       <Spacer>
         <View style={styles.row}>
@@ -49,9 +50,9 @@ const SignupScreen = (props) => {
         <Input
           label="Email"
           autoCapitalize="none"
-          value={data?.bio.email}
+          value={email}
           disabled
-          onChangeText={() => setEmail(data.bio.email)}
+          onChangeText={() => setEmail(email)}
         />
         <SmallSpacer />
         <Input
@@ -73,14 +74,14 @@ const SignupScreen = (props) => {
           raised
           title="Register"
           disabled={
-            !firstname || !lastname || !password || !username || !mobile
+            !firstname || !lastname || !password || !username || !mobile || mobile.length!=10
           }
           buttonStyle={{
             borderRadius: '50%',
             backgroundColor: '#4C7450',
           }}
           onPress={() =>
-            singup(firstname, lastname, email, username, password, mobile)
+            signup(`${firstname} ${lastname}`, email, username, password, mobile)
           }
         />
         <SmallSpacer />

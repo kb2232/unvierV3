@@ -5,10 +5,9 @@ import Spacer from './components/Spacer';
 import { Context } from './context/AuthContext';
 
 function LoginScreen(props) {
-  const info = useContext(Context);
+  const {signin,data:{errorMessages},bio} = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   return (
     <View style={styles.container}>
       <Spacer>
@@ -57,8 +56,9 @@ function LoginScreen(props) {
             borderRadius: '50%',
             backgroundColor: '#4C7450',
           }}
-          onPress={() => props.navigation.navigate('mains')}
+          onPress={() => signin(email,password)}
         />
+        <Text style={{textAlign:'center', color:'red',marginTop:5}}>{errorMessages?errorMessages:""}</Text>
       </Spacer>
       <View style={styles.forgetPass}>
         <Text>Can't login? </Text>
