@@ -113,6 +113,11 @@ const SignupScreen = (props) => {
     </KeyboardAwareScrollView>
   );
 };
+SignupScreen.navigationOptions = () => {
+	return {
+		header: null,
+	};
+};
 const styles = StyleSheet.create({
   row: {
     display: 'flex',

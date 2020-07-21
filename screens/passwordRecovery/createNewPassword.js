@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Text, Input, Icon, Button } from 'react-native-elements';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet,TouchableOpacity } from 'react-native';
 import Spacer from '../components/Spacer';
 import { Context } from '../context/AuthContext';
 
@@ -66,10 +66,22 @@ function setNewPassword(props) {
           }}
           onPress={() => props.navigation.navigate('logins')}
         />
+        <Spacer />
+				<View style={styles.centerRowItem}>
+					<Text>Remember your password? Login </Text>
+					<TouchableOpacity onPress={() => props.navigation.navigate('logins')}>
+						<Text style={{ color: '#4C7450', fontWeight: '700' }}>here</Text>
+					</TouchableOpacity>
+				</View>
       </Spacer>
     </View>
   );
 }
+setNewPassword.navigationOptions = (props) => {
+	return {
+		header: null,
+	};
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -79,6 +91,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  },	
+  centerRowItem: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });
 export default setNewPassword;

@@ -25,7 +25,7 @@ const MainNav = createSwitchNavigator({
   welcomes: { screen: Welcome },
   auths: {
     screen: createStackNavigator({
-      auths: AuthScreen,
+      auths: {screen:AuthScreen},
       logins: LoginScreen,
       signups: SignupScreen,
       forgetPassword: forgetPassword,
@@ -43,7 +43,7 @@ const MainNav = createSwitchNavigator({
           settings: SettingScreen,
         }),
       },
-      homes: HomeScreen,
+      search: HomeScreen,
       inboxs: InboxScreen,
     }),
   },

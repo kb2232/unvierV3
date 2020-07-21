@@ -27,7 +27,7 @@ function ProfileScreen(props){
             {(bio?.username)?`@${bio.username}`:bio.storageEmail}
             </Text>
             <SmallSpacer />
-            <Text>{errorMessages?errorMessages:""}</Text>
+            <Text style={{color:'red'}}>{errorMessages?props.navigation.navigate('logins'):""}</Text>
           </View>
         </Spacer>
         <Spacer>

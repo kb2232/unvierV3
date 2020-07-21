@@ -3,10 +3,10 @@ import { Text, Button } from 'react-native-elements';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Context } from './context/AuthContext';
 import { FontAwesome } from '@expo/vector-icons';
-import Spacer from './components/Spacer';
+import Spacer, {SmallSpacer} from './components/Spacer';
 
 function AuthScreen(props) {
-  const { signInWithGoogle } = useContext(Context);
+  const { signInWithGoogle,fblogIn } = useContext(Context);
   const renderLogo = () => {
     return (
       <Image style={styles.imageStyle} source={require('./images/logo.png')} />
@@ -32,9 +32,18 @@ function AuthScreen(props) {
             }}
             onPress={renderLogin}
           />
+          <SmallSpacer />
+          {/* <Button
+            title="Sign up"
+            buttonStyle={{
+              width: 250,
+              borderRadius: '50%',
+            }}
+            onPress={renderSignup}
+          /> */}
         </Spacer>
-        <Text style={{ color: '#4C7450', fontWeight: '800' }}>
-          Please signup using
+        <Text style={{fontWeight: '800' }}>
+          or register using 
         </Text>
         <Spacer />
         <View style={styles.iconstyle}>
@@ -45,14 +54,14 @@ function AuthScreen(props) {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => console.log('facebook sign-in pressed')}
+            onPress={()=>fblogIn()}
           >
             <Image
               style={styles.imageIconStyle}
               source={require('./images/facebook.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => console.log('twitter sign-in pressed')}
           >
             <FontAwesome
@@ -60,13 +69,17 @@ function AuthScreen(props) {
               style={{ color: '#38A1F3' }}
               size={50}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </>
   );
 }
-
+AuthScreen.navigationOptions = (props) => {
+  return {
+    header:null
+  };
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

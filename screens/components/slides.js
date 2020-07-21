@@ -65,9 +65,9 @@ class SlidesScreen extends Component {
             >
               <Text
                 style={
-                  (styles.textStyle, { color: index === 0 ? '#000' : '#fff' })
+                  (styles.textStyle, { color: index === 0 ? '#000' : '#fff', marginLeft:index === 0 ? 0 : '6%' })
                 }
-                h3
+                h4
               >
                 {header1}
               </Text>

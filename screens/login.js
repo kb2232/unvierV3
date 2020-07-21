@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text, Input, Icon, Button } from 'react-native-elements';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import Spacer from './components/Spacer';
+import Spacer,{SmallSpacer} from './components/Spacer';
 import { Context } from './context/AuthContext';
 
 function LoginScreen(props) {
@@ -48,7 +48,8 @@ function LoginScreen(props) {
             />
           }
         />
-        <Spacer />
+      </Spacer>
+        <Spacer>
         <Button
           raised
           title="Log in"
@@ -59,8 +60,17 @@ function LoginScreen(props) {
           onPress={() => signin(email,password)}
         />
         <Text style={{textAlign:'center', color:'red',marginTop:5}}>{errorMessages?errorMessages:""}</Text>
-      </Spacer>
-      <View style={styles.forgetPass}>
+      <View style={styles.centerItem}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('auths')}
+        >
+          <Text style={{ color: '#4C7450', fontWeight: '700' }}>
+            Sign up
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <SmallSpacer /><SmallSpacer />
+      <View style={styles.centerItem}>
         <Text>Can't login? </Text>
         <TouchableOpacity
           onPress={() => props.navigation.navigate('forgetPassword')}
@@ -70,14 +80,20 @@ function LoginScreen(props) {
           </Text>
         </TouchableOpacity>
       </View>
+        </Spacer>
     </View>
   );
 }
+LoginScreen.navigationOptions = (props) => {
+  return {
+    header: null
+  };
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  forgetPass: {
+  centerItem: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

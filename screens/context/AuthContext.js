@@ -1,6 +1,7 @@
 import React, { useReducer, useState } from 'react';
 import { AsyncStorage } from 'react-native';
-import AuthApi from '../api/Auth';
+import * as Facebook from 'expo-facebook';
+import AuthApi,{FacebookAPI} from '../api/Auth';
 import { navigate } from '../history';
 import * as Google from 'expo-google-app-auth';
 const IOS_CLIENT_ID =
@@ -56,7 +57,7 @@ export const AuthProvider = (props) => {
       });
       navigate('mains');
     } else {
-      navigate('logins');
+      navigate('welcomes');
     }
   };
 
@@ -73,10 +74,82 @@ export const AuthProvider = (props) => {
     } catch (error) {
       dispatch({
         type: 'add_error',
-        payload: 'unable to get user profile',
+        payload: 'please log back in',
       });
     }
   }
+
+  // -----sign up with facebook
+  const fblogIn=async()=>{
+    try {
+      await Facebook.initializeAsync(FacebookAPI);
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile','email'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,birthday&access_token=${token}`);
+        const {name,id,email} = await response.json();
+        await AsyncStorage.setItem('token', id);
+        await AsyncStorage.setItem(id, email);
+        dispatch({
+          type: 'sign_up',
+          payload: id,
+        });
+        setBio({ email: email, name: name });
+        navigate('signups');
+      } else {
+        dispatch({
+          type: 'add_error',
+          payload: 'You can the facebook process',
+        });
+      }
+    } catch ({ message }) {
+      console.log(message)
+      dispatch({
+        type: 'add_error',
+        payload: 'Unable to authenticate with facebook',
+      });
+    }
+  }
+
+  // ----sign up with google
+  const signInWithGoogle = async () => {
+    try {
+      const result = await Google.logInAsync({
+        iosClientId: IOS_CLIENT_ID,
+        androidClientId: ANDROID_CLIENT_ID,
+        scopes: ['profile', 'email'],
+      });
+
+      if (result.type === 'success') {
+        await AsyncStorage.setItem('token', result.accessToken);
+        await AsyncStorage.setItem(result.accessToken, result.user.email);
+        dispatch({
+          type: 'sign_up',
+          payload: result.accessToken,
+        });
+        setBio({ email: result.user.email, name: result.user.givenName });
+        navigate('signups', result.user.email); //after Google login redirect to Profile
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      console.log(e)
+      dispatch({
+        type: 'add_error',
+        payload: 'Unable to Sign in',
+      });
+    }
+  };
+
 
   // -- signin
   const signin = async (email, password) => {
@@ -105,41 +178,17 @@ export const AuthProvider = (props) => {
           type: 'add_error',
           payload: 'email is not registered',
         });
+      } else if(JSON.stringify(error).includes(422)){
+        dispatch({
+          type: 'add_error',
+          payload: 'incorrect email/password',
+        });
       } else{
         dispatch({
           type: 'add_error',
           payload: 'Unable to Sign in',
         });
       }
-    }
-  };
-
-  const signInWithGoogle = async () => {
-    try {
-      const result = await Google.logInAsync({
-        iosClientId: IOS_CLIENT_ID,
-        androidClientId: ANDROID_CLIENT_ID,
-        scopes: ['profile', 'email'],
-      });
-
-      if (result.type === 'success') {
-        navigate('signups', result.user.email); //after Google login redirect to Profile
-        const accessToken = await AsyncStorage.setItem('token', result.accessToken);
-        await AsyncStorage.setItem(accessToken, result.user.email);
-        dispatch({
-          type: 'sign_up',
-          payload: result.accessToken,
-        });
-        setBio({ email: result.user.email, name: result.user.givenName });
-        return result.accessToken;
-      } else {
-        return { cancelled: true };
-      }
-    } catch (e) {
-      dispatch({
-        type: 'add_error',
-        payload: 'Unable to Sign in',
-      });
     }
   };
 
@@ -227,7 +276,8 @@ export const AuthProvider = (props) => {
         signout,
         clearErrorMessage,
         tryLocalSign,
-        getUserProfile
+        getUserProfile,
+        fblogIn
       }}
     >
       {props.children}
