@@ -69,8 +69,8 @@ export const AuthProvider = (props) => {
       const accessToken = await AsyncStorage.getItem('token');
       const emailToken = await AsyncStorage.getItem(accessToken);
       const res = await AuthApi.post('/getuserprofile',{emailToken});
-      const { email,mobile,name,username} = res.data.user;
-      setBio({email,mobile,name,username,storageEmail:emailToken})
+      const { email,mobile,name,username,biography} = res.data.user;
+      setBio({email,mobile,name,username,storageEmail:emailToken,biography})
     } catch (error) {
       dispatch({
         type: 'add_error',
@@ -192,13 +192,14 @@ export const AuthProvider = (props) => {
     }
   };
 
-  /* -- sign up */
+  /* -- registration */
   const signup = async (
     name,
     email,
     username,
     password,
-    mobile
+    mobile,
+    biography
   ) => {
     email = email.toLowerCase();
     username = username.toLowerCase();
@@ -216,6 +217,7 @@ export const AuthProvider = (props) => {
         username,
         password,
         mobile,
+        biography
       });
       //await AsyncStorage.setItem('token',res.data.token);
       dispatch({

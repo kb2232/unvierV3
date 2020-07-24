@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  biography:String
 });
 
 UserSchema.pre('save', function (next) {

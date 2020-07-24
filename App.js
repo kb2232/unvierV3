@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Image } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
@@ -23,7 +24,7 @@ import { setNavigator } from './screens/history';
 const MainNav = createSwitchNavigator({
   ResolveAuth: LoadingScreen,
   welcomes: { screen: Welcome },
-  auths: {
+  authoriz: {
     screen: createStackNavigator({
       auths: {screen:AuthScreen},
       logins: LoginScreen,
@@ -37,14 +38,67 @@ const MainNav = createSwitchNavigator({
   },
   mains: {
     screen: createBottomTabNavigator({
-      profiles: {
+      PROFILE: {
         screen: createStackNavigator({
           profiles: ProfileScreen,
           settings: SettingScreen,
         }),
       },
-      search: HomeScreen,
-      inboxs: InboxScreen,
+      EXPLORE: HomeScreen,
+      INBOX: InboxScreen,
+    },{
+      defaultNavigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ focused, horizontal, tintColor }) => {
+          const { routeName } = navigation.state;
+          if (routeName === 'PROFILE') {
+            return (
+              <Image
+                source={
+                  focused
+                    ? require('./assets/profile.jpg')
+                    : require('./assets/profile.jpg')
+                }
+                style={{
+                  width: 40,
+                  height: 30,
+                }}
+              />
+            );
+          } else if (routeName === 'EXPLORE') {
+            return (
+              <Image
+                source={
+                  focused
+                    ? require('./assets/explore.jpg')
+                    : require('./assets/explore.jpg')
+                }
+                style={{
+                  width: 40,
+                  height: 30
+                }}
+              />
+            );
+          } else if (routeName === 'INBOX') {
+            return (
+              <Image
+                source={
+                  focused
+                  ? require('./assets/inbox.jpg')
+                  : require('./assets/inbox.jpg')
+                }
+                style={{
+                  width: 40,
+                  height:30
+                }}
+              />
+            );
+          }
+        },
+      }),
+      tabBarOptions: {
+        activeTintColor: '#42f44b',
+        inactiveTintColor: 'gray',
+      },
     }),
   },
 });

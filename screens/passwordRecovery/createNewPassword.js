@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text, Input, Icon, Button } from 'react-native-elements';
-import { View, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, StyleSheet,TouchableOpacity,SafeAreaView } from 'react-native';
+import {Inputs, Buttons} from '../components/FormFields'
 import Spacer from '../components/Spacer';
 import { Context } from '../context/AuthContext';
 
@@ -10,7 +11,7 @@ function setNewPassword(props) {
   const [passwordtwo, setPasswordTwo] = useState('');
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Spacer>
         <Text
           h3
@@ -23,49 +24,24 @@ function setNewPassword(props) {
         <Text style={{ fontWeight: '800' }}>Please enter a new password</Text>
       </Spacer>
       <Spacer>
-        <Input
-          label="New Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          leftIcon={
-            <Icon
-              name="lock"
-              size={24}
-              type="font-awesome"
-              iconStyle={{ marginRight: 10 }}
-              color="black"
-            />
-          }
-        />
+      <Inputs 
+					labels="New Password"
+					values={password}
+          onChangeValueInput={(text) => setPassword(text)}
+          secureText={true}
+			/>
         <Spacer />
-        <Input
-          label="Re-enter Password"
-          onChangeText={(text) => setPasswordTwo(text)}
-          value={passwordtwo}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          leftIcon={
-            <Icon
-              name="lock"
-              size={24}
-              type="font-awesome"
-              iconStyle={{ marginRight: 10 }}
-              color="black"
-            />
-          }
-        />
+        <Inputs 
+					labels="Re-enter Password"
+					values={passwordtwo}
+          onChangeValueInput={(text) => setPasswordTwo(text)}
+          secureText={true}
+			/>
         <Spacer />
-        <Button
-          raised
-          title="Change password"
-          buttonStyle={{
-            borderRadius: '50%',
-            backgroundColor: '#4C7450',
-          }}
-          onPress={() => props.navigation.navigate('logins')}
-        />
+        <Buttons
+				titles="Change password"
+				action={() => props.navigation.navigate('logins')}
+				/>
         <Spacer />
 				<View style={styles.centerRowItem}>
 					<Text>Remember your password? Login </Text>
@@ -74,12 +50,12 @@ function setNewPassword(props) {
 					</TouchableOpacity>
 				</View>
       </Spacer>
-    </View>
+    </SafeAreaView>
   );
 }
-setNewPassword.navigationOptions = (props) => {
+setNewPassword.navigationOptions = () => {
 	return {
-		header: null,
+		headerShown: false,
 	};
 };
 const styles = StyleSheet.create({

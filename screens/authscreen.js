@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import { Text, Button } from 'react-native-elements';
+import { SafeAreaView } from 'react-navigation';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Context } from './context/AuthContext';
-import { FontAwesome } from '@expo/vector-icons';
 import Spacer, {SmallSpacer} from './components/Spacer';
 
 function AuthScreen(props) {
-  const { signInWithGoogle,fblogIn } = useContext(Context);
+  const { signInWithGoogle,fblogIn,clearErrorMessage } = useContext(Context);
   const renderLogo = () => {
     return (
       <Image style={styles.imageStyle} source={require('./images/logo.png')} />
     );
   };
+  
   const renderLogin = () => {
     props.navigation.navigate('logins');
   };
@@ -19,8 +20,7 @@ function AuthScreen(props) {
     props.navigation.navigate('signups');
   };
   return (
-    <>
-      <View style={styles.container}>
+    <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
         {renderLogo()}
         <Spacer>
           <Button
@@ -71,8 +71,7 @@ function AuthScreen(props) {
             />
           </TouchableOpacity> */}
         </View>
-      </View>
-    </>
+    </SafeAreaView>
   );
 }
 AuthScreen.navigationOptions = (props) => {

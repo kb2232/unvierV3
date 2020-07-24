@@ -5,5 +5,4 @@ const router = express.Router();
 router.get('/', requireAuth, (req, res) => {
   res.send(`welcome to home`);
 });
-
 module.exports = router;

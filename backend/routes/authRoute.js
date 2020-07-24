@@ -8,7 +8,7 @@ const router = express.Router();
 
 /* new user signup */
 router.post('/newusersignup', async (req, res) => {
-  const { name, email, username, password, mobile } = req.body;
+  const { name, email, username, password, mobile,biography } = req.body;
   /* check if your email or username is already registered */
   const uniqueName = await User.findOne({ username });
   const userEmail = await User.findOne({ email });
@@ -18,7 +18,7 @@ router.post('/newusersignup', async (req, res) => {
   if(uniqueMobile) return res.status(403).send('mobile registered');
   else {
     try {
-      const newUser = new User({ name, email, username, password, mobile });
+      const newUser = new User({ name, email, username, password, mobile,biography });
       await newUser.save();
       /*this token is to sign the user - a way to track the signed in user */
       const token = jwt.sign({ userId: newUser._id }, key.JWT_KEY);

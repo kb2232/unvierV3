@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Slides from './components/slides';
-import IMGFILE from './images/logo.png';
 /**
  * TODO: move the slide data somewhere else
  */
@@ -23,7 +22,7 @@ const SLIDE_DATA = [
 
 class WelcomScreen extends Component {
   onSlidesComplete = () => {
-    this.props.navigation.navigate('auths');
+    this.props.navigation.navigate('logins');
   };
   render() {
     return (

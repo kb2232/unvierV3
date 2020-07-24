@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Text, Input, Icon, Button } from 'react-native-elements';
-import { View, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, StyleSheet,TouchableOpacity,SafeAreaView } from 'react-native';
+import {Inputs, Buttons} from '../components/FormFields'
 import Spacer from '../components/Spacer';
 import { Context } from '../context/AuthContext';
 
@@ -9,7 +10,7 @@ function verificationCode(props) {
 	const [code, setCode] = useState('');
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<Spacer>
 				<Text h3 style={(styles.center, { color: '#4C7450', fontWeight: '700' })}>
 					Forget Password
@@ -20,21 +21,15 @@ function verificationCode(props) {
 				<Text>We have sent it to your email</Text>
 			</Spacer>
 			<Spacer>
-				<Input
-					label="verification code :"
-					autoCapitalize="none"
-					value={code}
-					onChangeText={(text) => setCode(text)}
+			<Inputs 
+					labels="Verification Code"
+					values={code}
+					onChangeValueInput={(text) => setCode(text)}
 				/>
 				<Spacer />
-				<Button
-					raised
-					title="Next"
-					buttonStyle={{
-						borderRadius: '50%',
-						backgroundColor: '#4C7450',
-					}}
-					onPress={() => props.navigation.navigate('setNewPassword')}
+				<Buttons
+				titles="Next"
+				action={() => props.navigation.navigate('setNewPassword')}
 				/>
 				<Spacer />
 				<View style={styles.centerRowItem}>
@@ -44,7 +39,7 @@ function verificationCode(props) {
 					</TouchableOpacity>
 				</View>
 			</Spacer>
-		</View>
+		</SafeAreaView>
 	);
 }
 verificationCode.navigationOptions = (props) => {
