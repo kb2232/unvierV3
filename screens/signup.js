@@ -9,18 +9,15 @@ import Spacer, { SmallSpacer } from './components/Spacer';
 
 const SignupScreen = (props) => {
 	const {
-		bio: { email, name },
 		signup,
 		data: { errorMessages },
 		clearErrorMessage,
 	} = useContext(Context);
 	const [firstname, setFname] = useState('');
 	const [lastname, setLname] = useState('');
-	const [emails, setEmail] = useState('');
+	const [emails, setEmails] = useState('');
 	const [username, setUsername] = useState('');
-	const [mobile, setMobile] = useState();
 	const [password, setPassword] = useState('');
-	const [description, setDescription] = useState('');
 	return (
 		<KeyboardAwareScrollView>
 			<NavigationEvents
@@ -29,6 +26,7 @@ const SignupScreen = (props) => {
 				onWillFocus={() => clearErrorMessage()}
 				onDidFocus={() => clearErrorMessage()}
 			/>
+			<Spacer />
 			<Spacer>
 				<Text h3 style={{ color: '#4C7450', fontWeight: '700' }}>
 					Register
@@ -57,9 +55,8 @@ const SignupScreen = (props) => {
 				<SmallSpacer />
 				<Inputs
 					labels="Email"
-					values={email}
-					onChangeValueInput={() => setEmail(email)}
-					disabledInput={true}
+					values={emails}
+					onChangeValueInput={(text) => setEmails(text)}
 				/>
 				<SmallSpacer />
 				<Inputs
@@ -68,31 +65,16 @@ const SignupScreen = (props) => {
 					onChangeValueInput={(text) => setUsername(text)}
 				/>
 				<SmallSpacer />
-				<Inputs
-					labels="Mobile"
-					values={mobile}
-					onChangeValueInput={(text) => setMobile(text)}
-				/>
-				<SmallSpacer />
-				<Inputs
-					labels="Description"
-					values={description}
-					onChangeValueInput={(text) => setDescription(text)}
-				/>
-				<SmallSpacer />
 				<Buttons
 					titles="Register"
 					disabledButton={
 						!firstname ||
-						!description ||
 						!lastname ||
 						!password ||
 						!username ||
-						!mobile ||
-						mobile.length != 10 ||
-						isNaN(mobile)
+						!emails
 					}
-					action={() => signup(`${firstname} ${lastname}`, email, username, password, mobile, description)}
+					action={() => signup(`${firstname} ${lastname}`, emails, username, password)}
 				/>
 				<SmallSpacer />
 				<Text>By clicking register, you agree to our</Text>

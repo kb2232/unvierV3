@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>736150402588-um42cf5383r8rvsf84g75ls6ft3t0m92.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.736150402588-um42cf5383r8rvsf84g75ls6ft3t0m92</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA1haHi56olMCqsX6NbqElZDEzg4Oh-3c4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>736150402588</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>unvier</string>
+	<key>PROJECT_ID</key>
+	<string>unvieronelife</string>
+	<key>STORAGE_BUCKET</key>
+	<string>unvieronelife.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:736150402588:ios:82c777e6c9bd93298bd1d9</string>
+	<key>DATABASE_URL</key>
+	<string>https://unvieronelife.firebaseio.com</string>
+</dict>
+</plist>

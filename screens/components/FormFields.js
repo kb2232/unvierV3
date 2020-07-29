@@ -17,9 +17,9 @@ export const Inputs = ({ labels, values, onChangeValueInput, secureText=false,di
 		</View>
 	);
 };
-export const Buttons = ({ titles, action,disabledButton=false }) => {
+export const Buttons = ({ titles, action, disabledButton=false }) => {
 	return (
-		<View>
+		<View style={styles.buttonView}>
 			<Button raised disabled={disabledButton} title={titles} buttonStyle={styles.buttonContainer} onPress={action} />
 		</View>
 	);
@@ -37,7 +37,13 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		borderRadius: 30,
-    backgroundColor: '#4C7450'
+		backgroundColor: '#4C7450',
+		width:320
 	},
+	buttonView:{
+	 display:'flex',
+	 alignItems:'center',
+	 justifyContent:'center'
+	}
 });
 export default Inputs;

@@ -6,7 +6,7 @@ import Spacer, { SmallSpacer } from '../components/Spacer';
 import { Context } from '../context/AuthContext';
 
 function ForgetPasswordOne(props) {
-	const info = useContext(Context);
+	const {forgetPasswordLink,data: { errorMessages }} = useContext(Context);
 	const [email, setEmail] = useState('');
 
 	return (
@@ -18,7 +18,7 @@ function ForgetPasswordOne(props) {
 			</Spacer>
 			<Spacer>
 				<Text style={{ fontWeight: '800' }}>Please enter your registered email ID</Text>
-				<Text>We will send you a verification code to your email</Text>
+				<Text>We will send you a link to reset your password</Text>
 			</Spacer>
 			<Spacer>
 				<Inputs 
@@ -26,10 +26,15 @@ function ForgetPasswordOne(props) {
 					values={email}
 					onChangeValueInput={(text) => setEmail(text)}
 				/>
-				<Spacer />
+				<SmallSpacer />
+				<Text style={{ textAlign: 'center', color: 'red', marginTop: 3 }}>
+					{errorMessages ? errorMessages : ''}
+				</Text>
+				<SmallSpacer />
 				<Buttons
 				titles="Next"
-				action={() => props.navigation.navigate('verifycode')}
+				disabledButton={!email.includes("@")}
+				action={() => forgetPasswordLink(email)}
 				/>
 				<Spacer />
 				<View style={styles.centerRowItem}>

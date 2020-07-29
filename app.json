@@ -16,6 +16,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "unvier",
+      "buildNumber": "1.0.0",
       "supportsTablet": true,
       "config": {
         "googleSignIn": {

@@ -3,7 +3,6 @@ import { Text, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Context } from '../context/AuthContext';
-import MapScreen from '../components/Map';
 import { FontAwesome } from '@expo/vector-icons';
 import Spacer, { SmallSpacer } from '../components/Spacer';
 
@@ -48,12 +47,7 @@ function ProfileScreen(props) {
 						iconRight
 						onPress={() => props.navigation.navigate('settings')}
 					/>
-          <SmallSpacer />
-          <Text style={{ color: 'red' }}>{errorMessages ? props.navigation.navigate('logins') : ''}</Text>
 				</SmallSpacer>
-        <Spacer>
-          <MapScreen />
-        </Spacer>
 			</View>
 	);
 }

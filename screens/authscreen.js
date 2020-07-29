@@ -3,6 +3,7 @@ import { Text, Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-navigation';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Context } from './context/AuthContext';
+import { FontAwesome } from '@expo/vector-icons';
 import Spacer, {SmallSpacer} from './components/Spacer';
 
 function AuthScreen(props) {
@@ -22,6 +23,7 @@ function AuthScreen(props) {
   return (
     <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
         {renderLogo()}
+        <Spacer />
         <Spacer>
           <Button
             title="Log in"
@@ -33,17 +35,17 @@ function AuthScreen(props) {
             onPress={renderLogin}
           />
           <SmallSpacer />
-          {/* <Button
+          <Button
             title="Sign up"
             buttonStyle={{
               width: 250,
               borderRadius: '50%',
             }}
             onPress={renderSignup}
-          /> */}
+          />
         </Spacer>
         <Text style={{fontWeight: '800' }}>
-          or register using 
+          or connect using 
         </Text>
         <Spacer />
         <View style={styles.iconstyle}>
@@ -61,7 +63,7 @@ function AuthScreen(props) {
               source={require('./images/facebook.png')}
             />
           </TouchableOpacity>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={() => console.log('twitter sign-in pressed')}
           >
             <FontAwesome
@@ -69,7 +71,7 @@ function AuthScreen(props) {
               style={{ color: '#38A1F3' }}
               size={50}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
     </SafeAreaView>
   );

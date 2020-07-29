@@ -1,5 +1,8 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "unvierlocal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -18,6 +21,7 @@
     "expo": "^37.0.12",
     "expo-facebook": "^8.1.0",
     "expo-google-app-auth": "^8.1.2",
+    "firebase": "^7.17.1",
     "ngrok": "^3.2.7",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -42,5 +46,14 @@
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0"
   },
-  "private": true
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kb2232/unvierV3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kb2232/unvierV3/issues"
+  },
+  "homepage": "https://github.com/kb2232/unvierV3#readme"
 }

@@ -26,8 +26,8 @@ const MainNav = createSwitchNavigator({
   welcomes: { screen: Welcome },
   authoriz: {
     screen: createStackNavigator({
-      auths: {screen:AuthScreen},
-      logins: LoginScreen,
+      cancel: {screen:AuthScreen},
+      logins: {screen:LoginScreen},
       signups: SignupScreen,
       forgetPassword: forgetPassword,
       verifycode: verificationCode,
