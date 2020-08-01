@@ -7,18 +7,17 @@ import Spacer, { SmallSpacer } from './components/Spacer';
 import { Context } from './context/AuthContext';
 
 function LoginScreen(props) {
-  useEffect(()=>{
-    props.navigation.addListener('focus',()=>clearErrorMessage())
-    props.navigation.addListener('blur',()=>clearErrorMessage())
-  },[props.navigation])
 	const {
 		signin,
 		data: { errorMessages },
-		bio,
 		clearErrorMessage,
 		signInWithGoogle,
 		fblogIn
 	} = useContext(Context);
+	useEffect(()=>{
+    props.navigation.addListener('focus',()=>clearErrorMessage())
+    props.navigation.addListener('blur',()=>clearErrorMessage())
+  },[props.navigation])
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	return (
@@ -63,7 +62,7 @@ function LoginScreen(props) {
 				<SmallSpacer />
 				<View style={styles.centerItem}>
 				<Text>Or </Text>
-					<TouchableOpacity onPress={() => props.navigation.navigate('signups')}>
+					<TouchableOpacity onPress={() => props.navigation.navigate('emailconfirm')}>
 						<Text style={{ color: '#4C7450', fontWeight: '700' }}>create an account</Text>
 					</TouchableOpacity>
 				</View>

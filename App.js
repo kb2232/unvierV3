@@ -13,6 +13,7 @@ import ForgetPasswordScreen from './screens/Forgetpassword';
 import PrivacyScreen from './screens/policy/privacypolicy';
 import TermsScreen from './screens/policy/termsandcondition';
 import ProfileScreen from './screens/ProfileScreen';
+import EmailConfirmScreen from './screens/EmailconfirmationScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +58,12 @@ function App() {
 					<>
 						<Stack.Screen options={{ headerShown: false }} name="Unvier" component={LoadingScreen} />
 						<Stack.Screen options={{ headerShown: false }} name="signups" component={RegisterScreen} />
+						<Stack.Screen options={{
+								headerShown: true,
+								title: '',
+								headerTransparent: true,
+								headerBackTitleVisible: false,
+							}} name="emailconfirm" component={EmailConfirmScreen} />
 						<Stack.Screen
 							options={{
 								headerShown: true,

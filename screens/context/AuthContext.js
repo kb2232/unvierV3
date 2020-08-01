@@ -82,11 +82,8 @@ const fblogIn = async (props) => {
       const { name, id, email } = await response.json();
       await AsyncStorage.setItem('token', id);
       await AsyncStorage.setItem(id, email);
-      dispatch({
-        type: 'sign_in',
-        payload: id,
-      });
-      props.navigation.dispatch(CommonActions.navigate({name: 'mains'}));
+      dispatch({ type: 'sign_in', payload: id })
+      return props.navigation.dispatch(CommonActions.navigate({name: 'mains'}));
     } else {
       dispatch({
         type: 'add_error',
@@ -156,7 +153,6 @@ const fblogIn = async (props) => {
         .auth()
         .sendPasswordResetEmail(email)
         .then((res) => {
-          console.log({res})
           dispatch({
             type: 'add_error',
             payload: 'An email was sent to reset your password',
@@ -187,6 +183,49 @@ const fblogIn = async (props) => {
       })
     );
   };
+
+  /** Email confirmation - updated 7/31/20 */
+  const EmailConfirmationProcess=(props,email)=>{
+    firebase.auth().createUserWithEmailAndPassword(email,"defaultpassword")
+    .then(async()=>{
+      await signout(props);
+      await firebase
+        .auth()
+        .sendPasswordResetEmail(email)
+        .then((res) => {
+          dispatch({
+            type: 'add_error',
+            payload: 'Please check your email',
+          });
+          props.navigation.dispatch(
+            CommonActions.navigate({
+              name: 'Logins'
+            })
+          );
+        })
+        .catch((err) => {
+          dispatch({
+            type: 'add_error',
+            payload: 'invalid email',
+          });
+        });
+    })
+    .catch((err)=>{
+      console.log({errorM:err.message})
+      if(err.message==="The email address is already in use by another account."){
+        return dispatch({
+          type: 'add_error',
+          payload: 'email is already registered',
+        });
+      }
+      return dispatch({
+        type: 'add_error',
+        payload: 'email was not created',
+      });
+    })
+    const user = firebase.auth().currentUser;
+    console.log(user)
+  }
   /* clear error */
   const clearErrorMessage = () => {
     dispatch({
@@ -197,7 +236,7 @@ const fblogIn = async (props) => {
 
   return (
     <Context.Provider
-      value={{data:state,clearErrorMessage,fblogIn,signInWithGoogle,forgetPasswordLink,signin,signout}}
+      value={{data:state,EmailConfirmationProcess,clearErrorMessage,fblogIn,signInWithGoogle,forgetPasswordLink,signin,signout}}
     >
       {props.children}
     </Context.Provider>

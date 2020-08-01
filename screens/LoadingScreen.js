@@ -18,7 +18,7 @@ function AuthScreen(props) {
     props.navigation.navigate('Logins');
   };
   const renderSignup = () => {
-    props.navigation.navigate('signups');
+    props.navigation.navigate('emailconfirm');
   };
   return (
     <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
